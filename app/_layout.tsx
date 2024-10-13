@@ -24,6 +24,8 @@ const _layout = () => {
 
   return (
     <Stack>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="signup" />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="newsdetails/[id]" />
     </Stack>

@@ -1,14 +1,31 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Colours } from "@/shared/Colours";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BreakingNews from "../components/BreakingNews";
 import { useRouter } from "expo-router";
+import { auth } from "@/FirebaseConfig";
+import { getAuth, onAuthStateChanged, User, signOut } from "firebase/auth";
 
 const index = () => {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const [users, setUsers] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
+      setUsers(user);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  getAuth().onAuthStateChanged((user) => {
+    if (!user) {
+      router.push("/");
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -21,7 +38,6 @@ const index = () => {
             width: "100%",
             resizeMode: "cover",
             opacity: 0.85,
-            // height: "auto",
           }}
         />
         <View
@@ -31,9 +47,27 @@ const index = () => {
             paddingHorizontal: 20,
           }}
         >
-          <Pressable onPress={() => alert("Hi")}>
-            <Ionicons name="menu" size={45} color={Colours.background} />
-          </Pressable>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Pressable
+              onPress={() => {
+                signOut(auth);
+                return router.push("/");
+              }}
+            >
+              <Ionicons
+                name="log-out-outline"
+                size={35}
+                color={Colours.background}
+              />
+            </Pressable>
+            <Text style={{ color: "white" }}>Hi, {users?.email}</Text>
+          </View>
           <View style={{ marginTop: 90 }}>
             <Pressable
               onPress={() => alert("Hi")}
@@ -86,7 +120,7 @@ const index = () => {
         <Text style={{ color: Colours.text, fontSize: 24, fontWeight: "bold" }}>
           Breaking News{" "}
         </Text>
-        <Pressable onPress={() => router.push("/search")}>
+        <Pressable onPress={() => router.push("/discover")}>
           <Text
             style={{ color: Colours.text, fontSize: 18, fontWeight: "bold" }}
           >

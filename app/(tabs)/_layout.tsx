@@ -2,6 +2,8 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Colours } from "@/shared/Colours";
+import { View } from "react-native-reanimated/lib/typescript/Animated";
+import { Text } from "react-native";
 
 const _layout = () => {
   return (
@@ -28,7 +30,7 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="discover"
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="navigate-circle" size={28} color={color} />

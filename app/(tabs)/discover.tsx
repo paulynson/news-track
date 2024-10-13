@@ -61,13 +61,14 @@ const index = () => {
               }}
             >
               <TextInput
-                placeholder="Search..."
                 style={{}}
+                placeholder="Search..."
                 value={searchText}
                 onChangeText={(txt) => setSearchText(txt)}
-                // onKeyPress={() => searchFunc}
                 onTextInput={searchFunc}
+                autoCapitalize="none"
               />
+
               <Pressable onPress={searchFunc}>
                 <Ionicons name="search" size={26} />
               </Pressable>
