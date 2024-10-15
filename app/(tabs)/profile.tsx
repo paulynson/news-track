@@ -1,11 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "@/utils/colors";
-import { router } from "expo-router";
+import { auth } from "@/FirebaseConfig";
 
 const page = () => {
   const insets = useSafeAreaInsets();
@@ -63,7 +60,7 @@ const page = () => {
         <Text style={{ color: Colors.black, fontSize: 24, fontWeight: "bold" }}>
           Jade Thomson{" "}
         </Text>
-        <Pressable onPress={() => router.push("/discover")}>
+        <Pressable onPress={() => auth.signOut()}>
           <Text
             style={{ color: Colors.black, fontSize: 18, fontWeight: "bold" }}
           >

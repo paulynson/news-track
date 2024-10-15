@@ -22,9 +22,14 @@ const SignupScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const signUp = async () => {
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
     setLoading(true);
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
+
       if (user) router.push("/signin");
       console.log(user);
       setLoading(false);
