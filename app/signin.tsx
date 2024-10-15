@@ -13,23 +13,22 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../FirebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Colors } from "@/utils/colors";
 
-const SignupScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginScreen = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const signUp = async () => {
+  const signIn = async () => {
     setLoading(true);
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      if (user) router.push("/signin");
-      console.log(user);
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      if (user) router.push("/(tabs)");
       setLoading(false);
     } catch (error: any) {
-      Alert.alert("Error", "Invalid email or password", error.message);
+      Alert.alert("Error: ", error.message);
       setLoading(false);
     }
   };
@@ -39,12 +38,12 @@ const SignupScreen = () => {
       <SafeAreaView>
         <View style={{ marginBottom: 40 }}>
           <Image
-            source={require("../assets/images/reg.png")}
+            source={require("../assets/images/spec.png")}
             style={{ width: "100%", resizeMode: "cover" }}
           />
         </View>
-        <Text style={styles.title}>Register</Text>
-        <Text style={styles.subTitle}>Please register to Login.</Text>
+        <Text style={styles.title}>Login</Text>
+        <Text style={styles.subTitle}>Please sign in to continue.</Text>
         <KeyboardAvoidingView behavior="padding">
           <TextInput
             style={styles.input}
@@ -64,7 +63,7 @@ const SignupScreen = () => {
           />
 
           <Pressable
-            onPress={signUp}
+            onPress={signIn}
             style={{
               paddingVertical: 20,
               paddingHorizontal: 20,
@@ -78,12 +77,13 @@ const SignupScreen = () => {
                 textAlign: "center",
                 fontSize: 18,
                 fontWeight: "bold",
+                justifyContent: "center",
               }}
             >
               {loading ? (
                 <ActivityIndicator size="small" color={Colors.black} />
               ) : null}{" "}
-              Sign Up
+              Sign in
             </Text>
           </Pressable>
         </KeyboardAvoidingView>
@@ -94,8 +94,8 @@ const SignupScreen = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: Colors.gray }}>Already have an account?</Text>
-          <Pressable onPress={() => router.push("/")}>
+          <Text style={{ color: Colors.gray }}>Don't have an account?</Text>
+          <Pressable onPress={() => router.push("/signup")}>
             <Text
               style={{
                 marginLeft: 10,
@@ -103,7 +103,7 @@ const SignupScreen = () => {
                 fontWeight: "bold",
               }}
             >
-              Login
+              Signup
             </Text>
           </Pressable>
         </View>
@@ -142,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default LoginScreen;

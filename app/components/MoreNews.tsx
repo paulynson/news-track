@@ -8,11 +8,11 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
-import newsData from "@/data/newsdata.json";
 import categories from "@/data/categories.json";
 
 import { useRouter } from "expo-router";
 import { NewsProps } from "@/types/newsInterface";
+import { Colors } from "@/utils/colors";
 
 interface searchProps {
   searchText: string;
@@ -23,11 +23,9 @@ interface searchProps {
 const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
   const router = useRouter();
 
-  //   const [onActive, setOnActive] = useState<boolean>(false);
   const [selectedCat, setSelectedCat] = useState<string>("All");
 
   const filterCat = (categories: string) => {
-    // setOnActive(true);
     setSelectedCat(categories);
     setSearchText(searchText);
   };
@@ -70,7 +68,7 @@ const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
               fontWeight: "normal",
               lineHeight: 20,
               marginBottom: 10,
-              color: "#888888",
+              color: Colors.gray,
             }}
           >
             {item.summary}
@@ -81,12 +79,14 @@ const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
   };
 
   return (
-    <>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginVertical: 20 }}
-      >
+    <View
+      style={{
+        marginVertical: 20,
+        backgroundColor: Colors.white,
+        maxHeight: "100%",
+      }}
+    >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {categories.map((cat) => (
           <Pressable
             key={cat.id}
@@ -107,13 +107,16 @@ const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
           </Pressable>
         ))}
       </ScrollView>
+
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={renderNews}
+        alwaysBounceVertical={true}
+        style={{ marginTop: 20 }}
       />
-    </>
+    </View>
   );
 };
 
@@ -128,16 +131,17 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   activeCat: {
-    backgroundColor: "blue",
+    backgroundColor: Colors.lemon,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginHorizontal: 20,
     borderRadius: 30,
   },
   activeText: {
-    color: "white",
+    color: Colors.black,
+    fontWeight: "bold",
   },
   idleText: {
-    color: "black",
+    color: Colors.gray,
   },
 });

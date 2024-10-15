@@ -10,8 +10,8 @@ import React from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import newsData from "@/data/newsdata.json";
 import { Ionicons } from "@expo/vector-icons";
-import { Colours } from "@/shared/Colours";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Colors } from "@/utils/colors";
 
 const newsDetails = () => {
   const { id } = useLocalSearchParams();
@@ -37,7 +37,7 @@ const newsDetails = () => {
               <Ionicons
                 name="arrow-back-circle"
                 size={45}
-                color={Colours.background}
+                color={Colors.white}
               />
             </Pressable>
           ),

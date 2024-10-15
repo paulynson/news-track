@@ -1,84 +1,51 @@
 import { router } from "expo-router";
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Alert,
-  Pressable,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { auth } from "../FirebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { Colors } from "@/utils/colors";
 
-  const signIn = async () => {
-    try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      if (user) router.push("/(tabs)");
-    } catch (error: any) {
-      Alert.alert("Error: ", error.message);
-    }
-  };
+const OnboardLogo = () => {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 6000);
+  }, []);
 
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.title}>Login</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
+        <Image
+          source={require("../assets/images/Newstrack_animation_logo.gif")}
+          resizeMode="cover"
+          style={{ width: 450, height: 450, alignSelf: "center" }}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={true}
-        />
-
-        <Pressable
-          onPress={signIn}
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            borderRadius: 20,
-            backgroundColor: "blue",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              textAlign: "center",
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
-          >
-            Login
-          </Text>
-        </Pressable>
-        <View
-          style={{
-            flexDirection: "row",
-            marginVertical: 30,
-            justifyContent: "center",
-          }}
-        >
-          <Text>Not Register?</Text>
-          <Pressable onPress={() => router.push("/signup")}>
-            <Text style={{ marginLeft: 10, color: "blue" }}>Signup</Text>
-          </Pressable>
-        </View>
+        {loading && (
+          <View>
+            <Pressable
+              style={{
+                backgroundColor: Colors.lemon,
+                padding: 20,
+                borderRadius: 50,
+                width: 200,
+                alignSelf: "center",
+              }}
+              onPress={() => router.push("/signin")}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 18,
+                  fontWeight: "bold",
+                }}
+              >
+                Get Started
+              </Text>
+            </Pressable>
+          </View>
+        )}
       </SafeAreaView>
     </View>
   );
@@ -89,23 +56,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 20,
-    backgroundColor: "#f5f5f5",
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  input: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
+    alignItems: "center",
   },
 });
 
-export default LoginScreen;
+export default OnboardLogo;

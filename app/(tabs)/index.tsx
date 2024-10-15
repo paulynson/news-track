@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Colours } from "@/shared/Colours";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BreakingNews from "../components/BreakingNews";
 import { useRouter } from "expo-router";
 import { auth } from "@/FirebaseConfig";
-import { getAuth, onAuthStateChanged, User, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { Colors } from "@/utils/colors";
 
 const index = () => {
   const insets = useSafeAreaInsets();
@@ -23,28 +23,29 @@ const index = () => {
 
   getAuth().onAuthStateChanged((user) => {
     if (!user) {
-      router.push("/");
+      router.push("/signin");
     }
   });
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
-        <Image
-          source={require("@/assets/images/sim.jpg")}
+      <View>
+        <View
           style={{
             borderBottomRightRadius: 30,
             borderBottomLeftRadius: 30,
             width: "100%",
-            resizeMode: "cover",
+            height: 500,
+            backgroundColor: Colors.lemon,
             opacity: 0.85,
           }}
-        />
+        ></View>
         <View
           style={{
             position: "absolute",
-            paddingTop: insets.top,
+            paddingTop: insets.top + 30,
             paddingHorizontal: 20,
+            width: "100%",
           }}
         >
           <View
@@ -54,37 +55,30 @@ const index = () => {
               alignItems: "center",
             }}
           >
-            <Pressable
-              onPress={() => {
-                signOut(auth);
-                return router.push("/");
-              }}
-            >
-              <Ionicons
-                name="log-out-outline"
-                size={35}
-                color={Colours.background}
-              />
+            <Pressable onPress={() => auth.signOut()}>
+              <Ionicons name="log-out-outline" size={35} color={Colors.black} />
             </Pressable>
-            <Text style={{ color: "white" }}>Hi, {users?.email}</Text>
+            <Text style={{ color: Colors.black }}>Hi, {users?.email}</Text>
           </View>
           <View style={{ marginTop: 90 }}>
             <Pressable
               onPress={() => alert("Hi")}
               style={{
-                backgroundColor: "#f2f2f2",
+                backgroundColor: Colors.black,
                 paddingVertical: 10,
                 paddingHorizontal: 20,
                 borderRadius: 30,
                 width: 180,
               }}
             >
-              <Text style={{ fontSize: 18 }}>News of the day</Text>
+              <Text style={{ fontSize: 18, color: Colors.lemon }}>
+                News of the day
+              </Text>
             </Pressable>
             <Text
               style={{
-                color: "white",
-                fontSize: 20,
+                color: Colors.black,
+                fontSize: 18,
                 fontWeight: "bold",
                 marginVertical: 30,
                 lineHeight: 30,
@@ -92,19 +86,6 @@ const index = () => {
             >
               A glance to new technology ideas with the help of AI.
             </Text>
-            <Pressable
-              onPress={() => alert("Hi")}
-              style={{ flexDirection: "row", gap: 15, alignItems: "center" }}
-            >
-              <Text style={{ color: Colours.background, fontSize: 20 }}>
-                Read more
-              </Text>
-              <Ionicons
-                name="arrow-forward"
-                size={25}
-                color={Colours.background}
-              />
-            </Pressable>
           </View>
         </View>
       </View>
@@ -117,12 +98,12 @@ const index = () => {
           justifyContent: "space-between",
         }}
       >
-        <Text style={{ color: Colours.text, fontSize: 24, fontWeight: "bold" }}>
+        <Text style={{ color: Colors.black, fontSize: 24, fontWeight: "bold" }}>
           Breaking News{" "}
         </Text>
         <Pressable onPress={() => router.push("/discover")}>
           <Text
-            style={{ color: Colours.text, fontSize: 18, fontWeight: "bold" }}
+            style={{ color: Colors.black, fontSize: 18, fontWeight: "bold" }}
           >
             More
           </Text>
@@ -138,7 +119,10 @@ const index = () => {
 export default index;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    backgroundColor: Colors.white,
+    marginBottom: 40,
+  },
   imageWrapper: {
     flex: 1,
   },

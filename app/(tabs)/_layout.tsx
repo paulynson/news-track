@@ -1,21 +1,19 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Colours } from "@/shared/Colours";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
-import { Text } from "react-native";
+import { Colors } from "@/utils/colors";
 
 const _layout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colours.primary,
-        tabBarInactiveTintColor: "#777",
+        tabBarActiveTintColor: Colors.lemon,
+        tabBarInactiveTintColor: Colors.gray,
         headerShown: false,
         tabBarShowLabel: false,
 
         tabBarStyle: {
-          backgroundColor: Colours.background,
+          backgroundColor: "Colors.white",
           borderTopWidth: 0,
           padding: 0,
         },
@@ -25,7 +23,7 @@ const _layout = () => {
         name="index"
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={28} color={color} />
+            <Ionicons name="home" size={24} color={color} />
           ),
         }}
       />
@@ -33,7 +31,7 @@ const _layout = () => {
         name="discover"
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="navigate-circle" size={28} color={color} />
+            <Ionicons name="navigate-circle" size={24} color={color} />
           ),
         }}
       />
@@ -41,7 +39,7 @@ const _layout = () => {
         name="profile"
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" size={28} color={color} />
+            <MaterialIcons name="person" size={24} color={color} />
           ),
         }}
       />
