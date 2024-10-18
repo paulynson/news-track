@@ -1,54 +1,14 @@
 [
   {
     "id": 1,
-    "categories": "All"
+    "categories": "articles"
   },
   {
     "id": 2,
-    "categories": "Technology"
+    "categories": "blogs"
   },
   {
     "id": 3,
-    "categories": "Health"
-  },
-  {
-    "id": 4,
-    "categories": "Finance"
-  },
-  {
-    "id": 5,
-    "categories": "Environment"
-  },
-  {
-    "id": 6,
-    "categories": "Sports"
-  },
-  {
-    "id": 7,
-    "categories": "Politics"
-  },
-  {
-    "id": 8,
-    "categories": "Entertainment"
-  },
-  {
-    "id": 9,
-    "categories": "Travel"
-  },
-  {
-    "id": 10,
-    "categories": "Food"
-  },
-  {
-    "id": 11,
-    "categories": "Education"
-  },
-  {
-    "id": 12,
-    "categories": "Lifestyle"
-  },
-  {
-    "id": 13,
-    "categories": "Science"
+    "categories": "reports"
   }
 ]

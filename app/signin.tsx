@@ -10,6 +10,7 @@ import {
   Image,
   ActivityIndicator,
   KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../FirebaseConfig";
@@ -36,6 +37,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
+        <StatusBar animated={true} backgroundColor={Colors.lemon} />
         <View style={{ marginBottom: 40 }}>
           <Image
             source={require("../assets/images/spec.png")}

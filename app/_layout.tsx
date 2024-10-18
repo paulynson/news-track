@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { ActivityIndicator } from "react-native";
+
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "@/app/redux/store";
 
 SplashScreen.preventAutoHideAsync();
 
-const _layout = () => {
+const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "FsMe-Regular": require("../assets/fonts/FsMe-Regular.ttf"),
   });
@@ -15,22 +20,22 @@ const _layout = () => {
   }, [fontsLoaded, error]);
 
   if (!fontsLoaded) {
-    return null;
-  }
-
-  if (!fontsLoaded && !error) {
-    return null;
+    return <ActivityIndicator />;
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="signin" options={{ headerShown: false }} />
-      <Stack.Screen name="signup" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="newsdetails/[id]" />
-    </Stack>
+    <Provider store={store}>
+      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="signin" options={{ headerShown: false }} />
+          <Stack.Screen name="signup" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="newsdetails/[id]" />
+        </Stack>
+      </PersistGate>
+    </Provider>
   );
 };
 
-export default _layout;
+export default RootLayout;

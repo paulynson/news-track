@@ -5,26 +5,39 @@ import {
   ScrollView,
   Pressable,
   StyleSheet,
+  StatusBar,
 } from "react-native";
 import React from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import newsData from "@/data/newsdata.json";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "@/utils/colors";
+import { useAppSelector } from "../redux/store";
+
+interface ArticlesProps {
+  image_url: string;
+  summary: string;
+  title: string;
+}
 
 const newsDetails = () => {
-  const { id } = useLocalSearchParams();
+  const { id, category } = useLocalSearchParams();
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  // const NewDetails = newsData.find((item) => item.id === id);
+  const parsedId = Array.isArray(id) ? id[0] : id;
 
-  const newsId = Array.isArray(id)
-    ? parseInt(id[0], 10)
-    : parseInt(id as string, 10);
+  const singleArticle = useAppSelector((state) => state.news.allArticles);
+  const singleBlog = useAppSelector((state) => state.news.allBlogs);
+  const singleReport = useAppSelector((state) => state.news.allReports);
 
-  const newsDetails = newsData.find((item) => item.id === newsId);
+  let CData: ArticlesProps[] = [
+    ...singleArticle,
+    ...singleBlog,
+    ...singleReport,
+  ];
+
+  const finder = CData?.find((item: any) => item?.id === parseInt(parsedId));
 
   return (
     <>
@@ -33,11 +46,25 @@ const newsDetails = () => {
           headerTransparent: true,
           headerTitle: "",
           headerLeft: () => (
-            <Pressable onPress={() => router.back()}>
+            <Pressable
+              onPress={() => router.back()}
+              style={{
+                shadowColor: Colors.lemon,
+                borderColor: Colors.lemon,
+                borderWidth: 2,
+                borderRadius: 50,
+                backgroundColor: Colors.white,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: insets.top + 10,
+                width: 50,
+                height: 50,
+              }}
+            >
               <Ionicons
                 name="arrow-back-circle"
                 size={45}
-                color={Colors.white}
+                color={Colors.lemon}
               />
             </Pressable>
           ),
@@ -45,9 +72,10 @@ const newsDetails = () => {
       />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ position: "relative" }}>
+          <StatusBar animated={true} backgroundColor={Colors.lemon} />
+          <View>
             <Image
-              source={{ uri: newsDetails?.image }}
+              source={{ uri: finder?.image_url }}
               style={{
                 borderBottomRightRadius: 30,
                 borderBottomLeftRadius: 30,
@@ -59,62 +87,38 @@ const newsDetails = () => {
             />
             <View
               style={{
-                position: "absolute",
                 paddingHorizontal: 20,
                 justifyContent: "space-between",
                 bottom: 40,
               }}
             >
-              <View style={{ marginTop: 50 }}>
-                <View
-                  style={{
-                    backgroundColor: "#f2f2f2",
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    borderRadius: 30,
-                    width: 160,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                    }}
-                  >
-                    {newsDetails?.categories}
-                  </Text>
-                </View>
+              <View style={{ marginTop: 30 }}>
                 <Text
                   style={{
-                    color: "white",
+                    color: Colors.black,
                     fontSize: 30,
                     fontWeight: "bold",
                     marginVertical: 30,
                     lineHeight: 40,
                   }}
                 >
-                  {newsDetails?.title}
+                  {finder?.title}
                 </Text>
                 <Text
                   style={{
-                    color: "#f3f3f3",
+                    color: Colors.black,
                     fontSize: 15,
                     fontStyle: "italic",
-                    lineHeight: 20,
+                    lineHeight: 30,
                     textShadowColor: "red",
                   }}
                 >
-                  {newsDetails?.summary}
+                  {finder?.summary}
                 </Text>
+                <Text>{id}</Text>
+                <Text>{category}</Text>
               </View>
             </View>
-          </View>
-
-          <View style={{ padding: 20 }}>
-            <Text style={{ lineHeight: 30, fontSize: 18 }}>
-              {newsDetails?.description.split(". ").filter(Boolean) || []}
-            </Text>
           </View>
         </ScrollView>
       </View>

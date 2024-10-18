@@ -1,7 +1,17 @@
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  StatusBar,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import BreakingNews from "../components/BreakingNews";
 import { useRouter } from "expo-router";
 import { auth } from "@/FirebaseConfig";
@@ -11,31 +21,17 @@ import { Colors } from "@/utils/colors";
 const index = () => {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const [users, setUsers] = useState<User | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
-      setUsers(user);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  getAuth().onAuthStateChanged((user) => {
-    if (!user) {
-      router.push("/signin");
-    }
-  });
 
   return (
     <View style={styles.container}>
+      <StatusBar animated={true} backgroundColor={Colors.lemon} />
       <View>
         <View
           style={{
             borderBottomRightRadius: 30,
             borderBottomLeftRadius: 30,
             width: "100%",
-            height: 500,
+            height: 400,
             backgroundColor: Colors.lemon,
             opacity: 0.85,
           }}
@@ -48,21 +44,19 @@ const index = () => {
             width: "100%",
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Pressable onPress={() => auth.signOut()}>
-              <Ionicons name="log-out-outline" size={35} color={Colors.black} />
-            </Pressable>
-            <Text style={{ color: Colors.black }}>Hi, {users?.email}</Text>
-          </View>
           <View style={{ marginTop: 90 }}>
-            <Pressable
-              onPress={() => alert("Hi")}
+            <Text
+              style={{
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: "bold",
+                marginVertical: 10,
+                lineHeight: 30,
+              }}
+            >
+              Get the Latest Updates on NASA.
+            </Text>
+            <View
               style={{
                 backgroundColor: Colors.black,
                 paddingVertical: 10,
@@ -72,20 +66,9 @@ const index = () => {
               }}
             >
               <Text style={{ fontSize: 18, color: Colors.lemon }}>
-                News of the day
+                NASA and Space
               </Text>
-            </Pressable>
-            <Text
-              style={{
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: "bold",
-                marginVertical: 30,
-                lineHeight: 30,
-              }}
-            >
-              A glance to new technology ideas with the help of AI.
-            </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -103,7 +86,11 @@ const index = () => {
         </Text>
         <Pressable onPress={() => router.push("/discover")}>
           <Text
-            style={{ color: Colors.black, fontSize: 18, fontWeight: "bold" }}
+            style={{
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: "bold",
+            }}
           >
             More
           </Text>
@@ -122,6 +109,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
     marginBottom: 40,
+    height: "100%",
+    minHeight: "100%",
   },
   imageWrapper: {
     flex: 1,

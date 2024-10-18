@@ -31,10 +31,9 @@ const SignupScreen = () => {
       const user = await createUserWithEmailAndPassword(auth, email, password);
 
       if (user) router.push("/signin");
-      console.log(user);
       setLoading(false);
     } catch (error: any) {
-      Alert.alert("Error", "Invalid email or password", error.message);
+      alert(error.message);
       setLoading(false);
     }
   };
@@ -100,7 +99,7 @@ const SignupScreen = () => {
           }}
         >
           <Text style={{ color: Colors.gray }}>Already have an account?</Text>
-          <Pressable onPress={() => router.push("/")}>
+          <Pressable onPress={() => router.push("/signin")}>
             <Text
               style={{
                 marginLeft: 10,

@@ -1,16 +1,27 @@
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Colors } from "@/utils/colors";
 
 const OnboardLogo = () => {
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(true);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+      router.push("/signin");
     }, 6000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -22,30 +33,7 @@ const OnboardLogo = () => {
           style={{ width: 450, height: 450, alignSelf: "center" }}
         />
 
-        {loading && (
-          <View>
-            <Pressable
-              style={{
-                backgroundColor: Colors.lemon,
-                padding: 20,
-                borderRadius: 50,
-                width: 200,
-                alignSelf: "center",
-              }}
-              onPress={() => router.push("/signin")}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontSize: 18,
-                  fontWeight: "bold",
-                }}
-              >
-                Get Started
-              </Text>
-            </Pressable>
-          </View>
-        )}
+        {loading && <ActivityIndicator size="large" color={Colors.lemon} />}
       </SafeAreaView>
     </View>
   );

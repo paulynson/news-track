@@ -3,74 +3,52 @@ import {
   Text,
   FlatList,
   Pressable,
-  ScrollView,
   Image,
   StyleSheet,
 } from "react-native";
-import React, { useState } from "react";
-import categories from "@/data/categories.json";
-
+import React from "react";
 import { useRouter } from "expo-router";
-import { NewsProps } from "@/types/newsInterface";
 import { Colors } from "@/utils/colors";
 
-interface searchProps {
-  searchText: string;
-  setSearchText: React.Dispatch<React.SetStateAction<string>>;
-  dataSet: any[];
+interface NewsProps {
+  id: string | string[];
+  title: string;
+  summary: string;
+  image_url: string;
+  categories: string;
 }
 
-const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
+interface SearchProps {
+  dataSet: NewsProps[];
+  selectedCat: string;
+}
+
+const MoreNews = ({ dataSet }: SearchProps) => {
   const router = useRouter();
 
-  const [selectedCat, setSelectedCat] = useState<string>("All");
-
-  const filterCat = (categories: string) => {
-    setSelectedCat(categories);
-    setSearchText(searchText);
-  };
-
-  const filteredData =
-    selectedCat == "All" || selectedCat == ""
-      ? dataSet
-      : dataSet.filter((cat) => cat.categories === selectedCat);
-
   const renderNews = ({ item }: { item: NewsProps }) => {
+    const id = Array.isArray(item.id) ? item.id[0] : item.id;
+
     return (
       <Pressable
-        style={{
-          padding: 10,
-          width: 300,
-          marginRight: 20,
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-        onPress={() => router.push(`/newsdetails/${item.id}` as any)}
+        style={styles.newsItem}
+        onPress={() =>
+          router.push({
+            pathname: "/newsdetails/[id]",
+            params: { id: id.toString(), category: item.categories },
+          })
+        }
       >
         <Image
-          source={{ uri: item.image }}
-          style={{ width: 100, height: 100, borderRadius: 10 }}
+          source={{ uri: item.image_url }}
+          style={styles.newsImage}
           resizeMode="cover"
         />
-
-        <View style={{ marginLeft: 20 }}>
-          <Text
-            style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}
-            numberOfLines={1}
-          >
+        <View style={styles.newsDetails}>
+          <Text style={styles.newsTitle} numberOfLines={3}>
             {item.title}
           </Text>
-          <Text
-            numberOfLines={2}
-            style={{
-              fontSize: 15,
-              fontWeight: "normal",
-              lineHeight: 20,
-              marginBottom: 10,
-              color: Colors.gray,
-            }}
-          >
+          <Text numberOfLines={2} style={styles.newsSummary}>
             {item.summary}
           </Text>
         </View>
@@ -79,42 +57,16 @@ const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
   };
 
   return (
-    <View
-      style={{
-        marginVertical: 20,
-        backgroundColor: Colors.white,
-        maxHeight: "100%",
-      }}
-    >
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {categories.map((cat) => (
-          <Pressable
-            key={cat.id}
-            style={
-              selectedCat === cat.categories ? styles.activeCat : styles.cat
-            }
-            onPress={() => filterCat(cat.categories)}
-          >
-            <Text
-              style={
-                selectedCat === cat.categories
-                  ? styles.activeText
-                  : styles.idleText
-              }
-            >
-              {cat.categories}
-            </Text>
-          </Pressable>
-        ))}
-      </ScrollView>
-
+    <View style={styles.container}>
       <FlatList
-        data={filteredData}
-        keyExtractor={(item) => item.id.toString()}
+        data={dataSet}
+        keyExtractor={(item) => (Array.isArray(item.id) ? item.id[0] : item.id)}
         showsVerticalScrollIndicator={false}
         renderItem={renderNews}
         alwaysBounceVertical={true}
-        style={{ marginTop: 20 }}
+        contentContainerStyle={{ paddingBottom: 20 }}
+        initialNumToRender={15}
+        style={{ width: "100%" }}
       />
     </View>
   );
@@ -123,25 +75,34 @@ const MoreNews = ({ searchText, setSearchText, dataSet }: searchProps) => {
 export default MoreNews;
 
 const styles = StyleSheet.create({
-  cat: {
-    backgroundColor: "rgba(0,0,0,0.04)",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    borderRadius: 30,
+  container: {
+    // flex: 1,
+    marginVertical: 20,
+    backgroundColor: Colors.white,
   },
-  activeCat: {
-    backgroundColor: Colors.lemon,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    borderRadius: 30,
+  newsItem: {
+    padding: 10,
+    marginBottom: 10, // Adds spacing between items
+    flexDirection: "row",
+    alignItems: "center",
   },
-  activeText: {
-    color: Colors.black,
+  newsImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  newsDetails: {
+    marginLeft: 20,
+  },
+  newsTitle: {
+    fontSize: 18,
     fontWeight: "bold",
+    marginBottom: 10,
   },
-  idleText: {
+  newsSummary: {
+    fontSize: 15,
+    lineHeight: 20,
+    marginBottom: 10,
     color: Colors.gray,
   },
 });

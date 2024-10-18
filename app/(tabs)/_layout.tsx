@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "@/utils/colors";
+import { View } from "react-native";
 
 const _layout = () => {
   return (
@@ -13,9 +14,11 @@ const _layout = () => {
         tabBarShowLabel: false,
 
         tabBarStyle: {
-          backgroundColor: "Colors.white",
+          backgroundColor: Colors.white,
           borderTopWidth: 0,
-          padding: 0,
+          paddingVertical: 5,
+          height: 80,
+          elevation: 5,
         },
       }}
     >
@@ -23,23 +26,25 @@ const _layout = () => {
         name="index"
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={24} color={color} />
+            <Ionicons name="home" size={28} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
         name="discover"
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="navigate-circle" size={24} color={color} />
+            <Ionicons name="navigate-circle" size={28} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" size={24} color={color} />
+            <MaterialIcons name="person" size={28} color={color} />
           ),
         }}
       />
