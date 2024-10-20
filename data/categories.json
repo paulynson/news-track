@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "categories": "articles"
+  },
+  {
+    "id": 2,
+    "categories": "blogs"
+  },
+  {
+    "id": 3,
+    "categories": "reports"
+  }
+]
