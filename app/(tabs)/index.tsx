@@ -65,8 +65,11 @@ const index = () => {
                 paddingVertical: 10,
                 paddingHorizontal: 20,
                 borderRadius: 30,
-                width: 180,
+                // width: 180,
                 alignContent: "center",
+                justifyContent: "center",
+                width: "100%",
+                flex: 1,
               }}
             >
               <Text

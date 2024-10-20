@@ -1,0 +1,40 @@
+{
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
+    "preview4": {
+      "distribution": "internal"
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_APIKEY": "AIzaSyCMcNWLBElrE-FUsFVl1cjwRpg2K0DYcNo",
+        "EXPO_PUBLIC_AUTODOMAIN": "newstrack-7f3e7.firebaseapp.com",
+        "EXPO_PUBLIC_PROJECTID": "newstrack-7f3e7",
+        "EXPO_PUBLIC_STORAGEBUCKET": "newstrack-7f3e7.appspot.com",
+        "EXPO_PUBLIC_MESSAGINGSENDERID": "42329602572",
+        "EXPO_PUBLIC_APPID": "1:42329602572:web:7cf5bedb602ffaa1ac0c29"
+      }
+    },
+    "text": {
+      "env": {
+        "EXPO_PUBLIC_APIKEY": "AIzaSyCMcNWLBElrE-FUsFVl1cjwRpg2K0DYcNo",
+        "EXPO_PUBLIC_AUTODOMAIN": "newstrack-7f3e7.firebaseapp.com",
+        "EXPO_PUBLIC_PROJECTID": "newstrack-7f3e7",
+        "EXPO_PUBLIC_STORAGEBUCKET": "newstrack-7f3e7.appspot.com",
+        "EXPO_PUBLIC_MESSAGINGSENDERID": "42329602572",
+        "EXPO_PUBLIC_APPID": "1:42329602572:web:7cf5bedb602ffaa1ac0c29"
+      }
+    }
+  }
+}
