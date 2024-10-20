@@ -54,6 +54,7 @@ const index = () => {
                 fontWeight: "bold",
                 marginVertical: 10,
                 lineHeight: 30,
+                textAlign: "center",
               }}
             >
               Get the Latest Updates on NASA.
@@ -65,9 +66,16 @@ const index = () => {
                 paddingHorizontal: 20,
                 borderRadius: 30,
                 width: 180,
+                alignContent: "center",
               }}
             >
-              <Text style={{ fontSize: 18, color: Colors.lemon }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: Colors.lemon,
+                  textAlign: "center",
+                }}
+              >
                 NASA and Space
               </Text>
             </View>

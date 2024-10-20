@@ -10,15 +10,18 @@ const _layout = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.lemon,
         tabBarInactiveTintColor: Colors.gray,
+
         headerShown: false,
         tabBarShowLabel: false,
 
         tabBarStyle: {
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.light,
           borderTopWidth: 0,
           paddingVertical: 5,
           height: 80,
-          elevation: 5,
+          borderRadius: 50,
+          margin: 20,
+          elevation: 20,
         },
       }}
     >
@@ -26,7 +29,7 @@ const _layout = () => {
         name="index"
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={28} color={color} />
+            <Ionicons name="home" size={30} color={color} />
           ),
         }}
       />
@@ -35,7 +38,15 @@ const _layout = () => {
         name="discover"
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="navigate-circle" size={28} color={color} />
+            <View
+              style={{
+                backgroundColor: "black",
+                padding: 10,
+                borderRadius: 30,
+              }}
+            >
+              <Ionicons name="navigate-circle" size={30} color={`${color}`} />
+            </View>
           ),
         }}
       />
@@ -44,7 +55,11 @@ const _layout = () => {
         name="profile"
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" size={28} color={color} />
+            <MaterialIcons
+              name="person"
+              size={30}
+              color={`${color} , ${Colors.light}`}
+            />
           ),
         }}
       />
